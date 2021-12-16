@@ -6,6 +6,13 @@ import pickle
 from recommender import recommender
 from recommender_user import recommender_user
 
+
+# import pyarrow.parquet as pq
+
+# df_recommender_user = pq.read_table(source="user_recs.parquet").to_pandas()
+
+# df_recommender_user = pd.DataFrame(df_recommender_user)
+
 st.set_page_config(page_title='Hệ thống đề xuất sản phẩm')
 
 st.image("image/csc_banner.png")
@@ -238,11 +245,25 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
     final_data_cus = {"Mã khách hàng": new_data_cus.customer_id, "Tên khách hàng" : new_data_cus.name_x,"Mã sản phẩm" : new_data_cus.product_id,"Tên sản phẩm" : new_data_cus.name_y,"Đánh giá" : new_data_cus.rating_x}
 
     st.table(final_data_cus)
+    # find_user_rec = recommender_user.filter(recommender_user['customer_id'] == customer_id)
+    # st.code(df_recommender_user)
+    # df_recommender_user_1 = pd.concat([df_recommender_user.drop('recommendations', axis=1), pd.DataFrame(df_recommender_user['recommendations'].tolist())], axis=1)
+    # df_recommender_user[['product_id','rating']] = pd.DataFrame(df_recommender_user['recommendations'].tolist(),index=df_recommender_user.index)
+    # st.code(df_recommender_user_1)
+
+    # df_recommender_user_2 = pd.DataFrame(df_recommender_user['recommendations'].values.tolist(), index=df_recommender_user.index)
+    # st.code(df_recommender_user_2)
 
     find_user_rec = recommender_user.filter(recommender_user['customer_id'] == customer_id)
+    # find_user_rec = pd.DataFrame(find_user_rec)
+    # df_recommender_user1 = pd.concat([df_recommender_user.drop(['recommendations'], axis=1), df_recommender_user['recommendations'].apply(pd.Series)], axis=1)
+    # st.code(df_recommender_user1)
 
+    # find_user_rec = df_recommender_user.loc(df_recommender_user['customer_id'] == 5682927)
+    # st.code(find_user_rec)
     result = ''
     for user in find_user_rec.collect():
+        # st.code(user)
         lst = []
         for row in user['recommendations']:
             print(row)
