@@ -7,6 +7,10 @@ from recommender import recommender
 from recommender_user import recommender_user
 # from PIL import Image
 
+import pyarrow.parquet as pq
+
+# df_user_recs = pq.read_table(source="user_recs.parquet").to_pandas()
+
 st.set_page_config(page_title='Hệ thống đề xuất sản phẩm')
 
 
@@ -26,6 +30,8 @@ reviews = reviews.drop(columns=["Unnamed: 0"]).set_index("id")
 dictionary = pickle.load(open('Dictionary.sav', 'rb'))
 tfidf = pickle.load(open('TfidfModel.sav', 'rb'))
 index = pickle.load(open('Index.sav', 'rb'))
+
+# recommender_user = pd.read_parquet("user_recs.parquet",engine="pyarrow")
 
 import time
 
@@ -302,14 +308,19 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
     #         cus_img = cus_product['image'].tolist()
     #         st.image(cus_img[0])
     # cus_products = products.loc[products['item_id'] == reviews_cus['product_id']]
-
+    # st.code(df_user_recs)
+    # df_user_recs_new = pd.DataFrame(df_user_recs)
+    # df_user_recs_new[['product_id','rating']] = pd.DataFrame(df_user_recs_new['recommendations'].tolist(), index= df_user_recs_new.index)
+    
 
     find_user_rec = recommender_user.filter(recommender_user['customer_id'] == customer_id)
     # find_user_rec.show(truncate=False)
     
+    # st.code(df_user_recs_new)
     # rec = find_user_rec.select(find_user_rec.customer_id, explode(find_user_rec.recommendations))
     # rec = rec.withColumn('product_id', rec.col.getField('product_id')).withColumn('rating', rec.col.getField('rating'))
-
+    # st.code(find_user_rec)
+    # st.code(type(df_user_recs))
     result = ''
     for user in find_user_rec.collect():
         lst = []
