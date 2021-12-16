@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pickle
 from recommender import recommender
 from recommender_user import recommender_user
@@ -42,90 +41,65 @@ elif box == "Xây dựng hệ thống":
     st.image("image/toptal-blog-image.png")
 
     st.write("""
-    #### Some data of products:
+    #### Dữ liệu về phần sản phẩm:
     """)
     st.dataframe(products.head())
     st.write("""
-    #### Some data of reviews:
+    #### Dữ liệu về phần nhận xét:
     """)
     st.dataframe(reviews.head())
 
     st.write("""
-    #### Explode more data:
+    #### Tìm hiểu thêm về bộ dữ liệu:
     """)
     st.dataframe(products[['price','list_price','rating']].describe())
     st.markdown("""
-    * 'price' and 'list price' got large range of value trong 7 thousands to ~62.7 milion
-    * 'rating' in range 0-5
+    * 'price' và 'list price' có giá trị trong khoảng 7000 đến ~62.7 triệu
+    * 'rating' trong khoảng từ 0-5
     """)
-    # Visualize the result
-    rating = products['rating'].unique().tolist()
-    price = products['price'].unique().tolist()
-    rating_selection = st.slider('Rating:',
-                                min_value= min(rating),
-                                max_value= max(rating),
-                                value=(min(rating),max(rating)))
-    price_selection = st.slider("Price:",
-                                min_value= min(price),
-                                max_value= max(price),
-                                value=(min(price),max(price)))
-    # Filter dataframe based on selection rating
-    mask = products['rating'].between(*rating_selection)
-    number_of_result = products[mask].shape[0]
-    st.markdown(f'*Available results: {number_of_result}*')
 
     brands = products.groupby('brand')['item_id'].count().sort_values(ascending=False)
-
     plt.subplots_adjust(top=1,bottom=0)
     brands[1:11].plot(kind='bar')
-    plt.ylabel('count')
-    plt.title('Product Items by brands')
+    plt.ylabel('số lượng')
+    plt.title('Số lượng sản phẩm tính theo nhãn hàng')
     st.pyplot(plt)
 
     st.markdown("""
-    => Samsung is the brand got a highest number of products.
+    => Samsung là nhãn hàng có số lượng sản phẩm nhiều nhất.
     """)
 
     plt.subplots_adjust(top=1,bottom=0)
     price_by_brand = products.groupby(by='brand').mean()['price']
     price_by_brand.sort_values(ascending=False)[:10].plot(kind='bar')
-    plt.ylabel('price')
-    plt.title('Average price by brand')
+    plt.ylabel('giá')
+    plt.title('Giá trị trung bình tính theo nhãn hàng')
     st.pyplot(plt)
     
     st.markdown("""
-    => Hitachi has high average price.
+    => Thương hiệu Hitachi có giá trung bình cao nhất.
     """)
 
-    plt.subplots_adjust(top=1,bottom=0)
-    sns.displot(products,x='rating',kind='hist')
-    plt.title('Total ratings')
+    # Top 20 products have most positive review
+    plt.figure(figsize=(10,4))
+    top_products = reviews.groupby('product_id').count()['customer_id'].sort_values(ascending=False)[:20]
+    top_products.index = products[products.item_id.isin(top_products.index)]['name'].str[:25]
+    top_products.plot(kind='bar')
+    plt.title('Top 20 sản phẩm nhận được nhiều lượt đánh giá tích cực')
     st.pyplot(plt)
 
     st.markdown("""
-    => Almost rating is 0 and 5 and above 4
+    => Chuột không giây Logitech nhận được nhiều lượt đánh giá tích cực nhất.
     """)
 
-    avg_rating_customer = reviews.groupby(by='product_id').mean()['rating'].to_frame().reset_index()
-    avg_rating_customer.rename({'rating':'avg_rating'},axis=1,inplace=True)
-    new_products = products.merge(avg_rating_customer,left_on='item_id',right_on='product_id',how='left')
-
-
-    plt.subplots_adjust(top=1,bottom=0)
-    sns.displot(new_products,x='avg_rating',kind='hist')
-    plt.title('Average ratings')
+    # Top 20 customer make review
+    top_rating_customers = reviews.groupby('customer_id').count()['product_id'].sort_values(ascending=False)[:20]
+    plt.figure(figsize=(12,6))
+    plt.bar(x=[str(x) for x in top_rating_customers.index],height=top_rating_customers.values)
+    plt.xticks(rotation=60)
+    plt.title('Top 20 khách hàng có lượt đánh giá về sản phẩm nhiều nhất')
     st.pyplot(plt)
 
-    st.markdown("""
-    => Rating product by customer > 0. Then we can see rating = 0 in product is missing value.
-    """)
-
-
-    plt.subplots_adjust(top=1,bottom=0)
-    sns.displot(reviews,x='rating',kind='kde')
-    plt.title('Total reviews')
-    st.pyplot(plt)
-    
 elif box == "Đề xuất sản phẩm khi khách hàng chọn một sản phẩm bất kỳ":
 
     st.image('image/tiki_banner_1.jpg')
