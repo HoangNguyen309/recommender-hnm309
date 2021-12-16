@@ -1,13 +1,5 @@
-# import libraries
-import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn import metrics
-import seaborn as sns
-
-import plotly.express as px
-import re
 
 products = pd.read_csv('final_product.csv')
 
