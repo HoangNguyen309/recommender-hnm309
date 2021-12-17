@@ -55,14 +55,15 @@ if box == "Mục tiêu của hệ thống đề xuất sản phẩm":
     """,
         unsafe_allow_html=True)
     st.image('image/RecommendationEngine-1200x675.png',width=200,use_column_width=True)
-    st.markdown("<p style='text-align: center;'>Có rất nhiều ứng dụng mà các trang web thu thập dữ liệu từ người dùng của họ và sử dụng dữ liệu đó để dự đoán lượt thích và không thích của người dùng.<br>Hỗ trợ ra quyết định, cung cấp giải pháp mang tính cá nhân hóa mà không phải trải qua quá trình tìm kiếm phức tạp. Điều này cho phép họ giới thiệu nội dung mà họ thích. Thu thập hành vi và dữ liệu người dùng trước và đưa ra các gợi ý các sản phẩm tốt nhất trong số các sản phẩm phù hợp cho người dùng hiện hành.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center;'>Có rất nhiều ứng dụng mà các trang web thu thập dữ liệu từ người dùng của họ và sử dụng dữ liệu đó để dự đoán lượt thích và không thích của người dùng.<br><h5>Mục tiêu:</h5><br>Hỗ trợ ra quyết định, cung cấp giải pháp mang tính cá nhân hóa mà không phải trải qua quá trình tìm kiếm phức tạp. Điều này cho phép họ giới thiệu nội dung mà họ thích. Thu thập hành vi và dữ liệu người dùng trước và đưa ra các gợi ý các sản phẩm tốt nhất trong số các sản phẩm phù hợp cho người dùng hiện hành.</p>", unsafe_allow_html=True)
+    st.markdown("<h5> Quy trình: </h5>",unsafe_allow_html=True)
     st.image("image/recom_sys.png",width=200,use_column_width=True)
     st.markdown("<p style='text-align: center;'>Có 2 loại hệ thống đề xuất đó là: </p>",unsafe_allow_html=True)
     st.markdown("<span style='text-align: center;'>* Collaborative Filtering: Đề xuất các mục dựa trên sự đo lường mức độ giống nhau giữa người dùng hoặc các sản phẩm. Giả định cơ bản đằng sau thuật toán là những người dùng có cùng sở thích sẽ có chung sở thích.</span>",unsafe_allow_html=True)
     st.markdown("<span style='text-align: center;'>* Content-Based Recommendation: Công nghệ máy học có giám sát được sử dụng để nhận biết và phân biệt giữa các mục hoặc sản phẩm thú vị và không thú vị đối với người dùng.</p>",unsafe_allow_html=True)
     st.image("image/recom_sys_2.png",width=200,use_column_width=True)
     st.markdown("<p style='text-align: center;'>* Content-Based Recommendation System: Hệ thống dựa trên nội dung đề xuất các mặt hàng cho khách hàng tương tự như các mặt hàng đã được khách hàng xếp hạng cao trước đó. Nó sử dụng các tính năng và thuộc tính của mặt hàng. Từ các thuộc tính này, nó có thể tính toán mức độ giống nhau giữa các mục.</p>",unsafe_allow_html=True)
-
+    
 elif box == "Xây dựng hệ thống":
     st.markdown(
     """
