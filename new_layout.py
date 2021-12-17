@@ -20,9 +20,40 @@ reviews = reviews.drop(columns=["Unnamed: 0"]).set_index("id")
 dictionary = pickle.load(open('Dictionary.sav', 'rb'))
 tfidf = pickle.load(open('TfidfModel.sav', 'rb'))
 index = pickle.load(open('Index.sav', 'rb'))
-
-box = st.selectbox("Xin mời lựa chọn:",("Mục tiêu của hệ thống đề xuất sản phẩm","Xây dựng hệ thống","Đề xuất sản phẩm khi khách hàng chọn một sản phẩm bất kỳ","Đề xuất sản phẩm bằng ID khách hàng"))
+st.markdown("##### Xin mời lựa chọn:")
+box = st.selectbox("",("Mục tiêu của hệ thống đề xuất sản phẩm","Xây dựng hệ thống","Đề xuất sản phẩm khi khách hàng chọn một sản phẩm bất kỳ","Đề xuất sản phẩm bằng ID khách hàng"))
 if box == "Mục tiêu của hệ thống đề xuất sản phẩm":
+    st.markdown(
+    """
+    <style>
+    .reportview-container .markdown-text-container {
+        font-family: Sans serif;
+    }
+    .sidebar .sidebar-content {
+        background-image: linear-gradient(#2e7bcf,#2e7bcf);
+        color: white;
+    }
+    .Widget>label {
+        color: white;
+        font-family: Sans serif;
+    }
+    [class^="st-b"]  {
+        color: white;
+        font-family: Sans serif;
+    }
+    footer {
+        font-family: Sans serif;
+    }
+    .reportview-container .main footer, .reportview-container .main footer a {
+        color: #0c0080;
+    }
+    header .decoration {
+        background-image: none;
+    }
+
+    </style>
+    """,
+        unsafe_allow_html=True)
     st.image('image/RecommendationEngine-1200x675.png')
     st.markdown("<p style='text-align: center;'>Có rất nhiều ứng dụng mà các trang web thu thập dữ liệu từ người dùng của họ và sử dụng dữ liệu đó để dự đoán lượt thích và không thích của người dùng.<br>Hỗ trợ ra quyết định, cung cấp giải pháp mang tính cá nhân hóa mà không phải trải qua quá trình tìm kiếm phức tạp. Điều này cho phép họ giới thiệu nội dung mà họ thích. Thu thập hành vi và dữ liệu người dùng trước và đưa ra các gợi ý các sản phẩm tốt nhất trong số các sản phẩm phù hợp cho người dùng hiện hành.</p>", unsafe_allow_html=True)
     st.image("image/recom_sys.png")
@@ -33,6 +64,37 @@ if box == "Mục tiêu của hệ thống đề xuất sản phẩm":
     st.markdown("<p style='text-align: center;'>* Content-Based Recommendation System: Hệ thống dựa trên nội dung đề xuất các mặt hàng cho khách hàng tương tự như các mặt hàng đã được khách hàng xếp hạng cao trước đó. Nó sử dụng các tính năng và thuộc tính của mặt hàng. Từ các thuộc tính này, nó có thể tính toán mức độ giống nhau giữa các mục.</p>",unsafe_allow_html=True)
 
 elif box == "Xây dựng hệ thống":
+    st.markdown(
+    """
+    <style>
+    .reportview-container .markdown-text-container {
+        font-family: Sans serif;
+    }
+    .sidebar .sidebar-content {
+        background-image: linear-gradient(#2e7bcf,#2e7bcf);
+        color: white;
+    }
+    .Widget>label {
+        color: white;
+        font-family: Sans serif;
+    }
+    [class^="st-b"]  {
+        color: white;
+        font-family: Sans serif;
+    }
+    footer {
+        font-family: Sans serif;
+    }
+    .reportview-container .main footer, .reportview-container .main footer a {
+        color: #0c0080;
+    }
+    header .decoration {
+        background-image: none;
+    }
+
+    </style>
+    """,
+        unsafe_allow_html=True)
     st.image("image/toptal-blog-image.png")
 
     st.write("""
@@ -96,9 +158,40 @@ elif box == "Xây dựng hệ thống":
     st.pyplot(plt)
 
 elif box == "Đề xuất sản phẩm khi khách hàng chọn một sản phẩm bất kỳ":
+    st.markdown(
+    """
+    <style>
+    .reportview-container .markdown-text-container {
+        font-family: Sans serif;
+    }
+    .sidebar .sidebar-content {
+        background-image: linear-gradient(#2e7bcf,#2e7bcf);
+        color: white;
+    }
+    .Widget>label {
+        color: white;
+        font-family: Sans serif;
+    }
+    [class^="st-b"]  {
+        color: white;
+        font-family: Sans serif;
+    }
+    footer {
+        font-family: Sans serif;
+    }
+    .reportview-container .main footer, .reportview-container .main footer a {
+        color: #0c0080;
+    }
+    header .decoration {
+        background-image: none;
+    }
 
+    </style>
+    """,
+        unsafe_allow_html=True)
     st.image('image/tiki_banner_1.jpg')
-    option_all_users = st.selectbox('Vui lòng chọn sản phẩm bạn cần tìm kiếm:',products['name'].sort_values().unique().tolist())
+    st.markdown("##### Vui lòng chọn sản phẩm bạn cần tìm kiếm:")
+    option_all_users = st.selectbox('',products['name'].sort_values().unique().tolist())
     st.markdown("### Bạn đã chọn sản phẩm:")
     st.write(option_all_users)
     products_chosen = products.loc[products['name'] == option_all_users]
@@ -203,6 +296,37 @@ elif box == "Đề xuất sản phẩm khi khách hàng chọn một sản phẩ
         st.write("Điểm similarity:",f"{score_recom4:.3f}",":thumbsup:")
 
 elif box == "Đề xuất sản phẩm bằng ID khách hàng":
+    st.markdown(
+    """
+    <style>
+    .reportview-container .markdown-text-container {
+        font-family: Sans serif;
+    }
+    .sidebar .sidebar-content {
+        background-image: linear-gradient(#2e7bcf,#2e7bcf);
+        color: white;
+    }
+    .Widget>label {
+        color: white;
+        font-family: Sans serif;
+    }
+    [class^="st-b"]  {
+        color: white;
+        font-family: Sans serif;
+    }
+    footer {
+        font-family: Sans serif;
+    }
+    .reportview-container .main footer, .reportview-container .main footer a {
+        color: #0c0080;
+    }
+    header .decoration {
+        background-image: none;
+    }
+
+    </style>
+    """,
+        unsafe_allow_html=True)
     # Recommendation for customer_id = list or input by customer
     customer_id = st.text_input("Vui lòng nhập ID:", value= 5682927, max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None)
     reviews_cus = reviews.loc[reviews['customer_id'] == int(customer_id)]
