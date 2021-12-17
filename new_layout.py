@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import pickle
 from recommender import recommender
 
-st.set_page_config(page_title="Hệ thống đề xuất sản phẩm",layout="wide")
+st.set_page_config(page_title="Hệ thống đề xuất sản phẩm")
 st.image("image/csc_banner.png",use_column_width=True)
 st.markdown("<h1 style='text-align: center;background-color:powderblue;'>Đồ án tốt nghiệp Data Science</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;'>Chủ đề: Recommendation System (Tiki.vn)</h2>", unsafe_allow_html=True)
@@ -45,7 +45,7 @@ if box == "Mục tiêu của hệ thống đề xuất sản phẩm":
         font-family: Sans serif;
     }
     .reportview-container .main footer, .reportview-container .main footer a {
-        color: #0c0080;
+        color: #A3EABB;
     }
     header .decoration {
         background-image: none;
@@ -54,13 +54,13 @@ if box == "Mục tiêu của hệ thống đề xuất sản phẩm":
     </style>
     """,
         unsafe_allow_html=True)
-    st.image('image/RecommendationEngine-1200x675.png')
+    st.image('image/RecommendationEngine-1200x675.png',width=200,use_column_width=True)
     st.markdown("<p style='text-align: center;'>Có rất nhiều ứng dụng mà các trang web thu thập dữ liệu từ người dùng của họ và sử dụng dữ liệu đó để dự đoán lượt thích và không thích của người dùng.<br>Hỗ trợ ra quyết định, cung cấp giải pháp mang tính cá nhân hóa mà không phải trải qua quá trình tìm kiếm phức tạp. Điều này cho phép họ giới thiệu nội dung mà họ thích. Thu thập hành vi và dữ liệu người dùng trước và đưa ra các gợi ý các sản phẩm tốt nhất trong số các sản phẩm phù hợp cho người dùng hiện hành.</p>", unsafe_allow_html=True)
-    st.image("image/recom_sys.png")
+    st.image("image/recom_sys.png",width=200,use_column_width=True)
     st.markdown("<p style='text-align: center;'>Có 2 loại hệ thống đề xuất đó là: </p>",unsafe_allow_html=True)
     st.markdown("<span style='text-align: center;'>* Collaborative Filtering: Đề xuất các mục dựa trên sự đo lường mức độ giống nhau giữa người dùng hoặc các sản phẩm. Giả định cơ bản đằng sau thuật toán là những người dùng có cùng sở thích sẽ có chung sở thích.</span>",unsafe_allow_html=True)
     st.markdown("<span style='text-align: center;'>* Content-Based Recommendation: Công nghệ máy học có giám sát được sử dụng để nhận biết và phân biệt giữa các mục hoặc sản phẩm thú vị và không thú vị đối với người dùng.</p>",unsafe_allow_html=True)
-    st.image("image/recom_sys_2.png")
+    st.image("image/recom_sys_2.png",width=200,use_column_width=True)
     st.markdown("<p style='text-align: center;'>* Content-Based Recommendation System: Hệ thống dựa trên nội dung đề xuất các mặt hàng cho khách hàng tương tự như các mặt hàng đã được khách hàng xếp hạng cao trước đó. Nó sử dụng các tính năng và thuộc tính của mặt hàng. Từ các thuộc tính này, nó có thể tính toán mức độ giống nhau giữa các mục.</p>",unsafe_allow_html=True)
 
 elif box == "Xây dựng hệ thống":
@@ -86,7 +86,7 @@ elif box == "Xây dựng hệ thống":
         font-family: Sans serif;
     }
     .reportview-container .main footer, .reportview-container .main footer a {
-        color: #0c0080;
+        color: #A3EABB;
     }
     header .decoration {
         background-image: none;
@@ -180,7 +180,7 @@ elif box == "Đề xuất sản phẩm khi khách hàng chọn một sản phẩ
         font-family: Sans serif;
     }
     .reportview-container .main footer, .reportview-container .main footer a {
-        color: #0c0080;
+        color: #A3EABB;
     }
     header .decoration {
         background-image: none;
@@ -318,7 +318,7 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
         font-family: Sans serif;
     }
     .reportview-container .main footer, .reportview-container .main footer a {
-        color: #0c0080;
+        color: #A3EABB;
     }
     header .decoration {
         background-image: none;
