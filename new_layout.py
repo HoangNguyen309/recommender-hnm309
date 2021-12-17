@@ -3,21 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 from recommender import recommender
-from recommender_user import recommender_user
-
-
-# import pyarrow.parquet as pq
-
-# df_recommender_user = pq.read_table(source="user_recs.parquet").to_pandas()
-
-# df_recommender_user = pd.DataFrame(df_recommender_user)
 
 st.set_page_config(page_title='Hệ thống đề xuất sản phẩm')
 
 st.image("image/csc_banner.png")
-st.markdown("<h1 style='text-align: center;'>Đồ án tốt nghiệp Data Science</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;background-color:powderblue;'>Đồ án tốt nghiệp Data Science</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;'>Chủ đề: Recommendation System (Tiki.vn)</h2>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>Nhóm<br>Nguyễn Minh Hoàng - Trần Trọng Huy</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>Nhóm<br>Trần Trọng Huy - Nguyễn Minh Hoàng</h3>", unsafe_allow_html=True)
 
 products = pd.read_csv("final_product.csv",skipinitialspace=True)
 products = products.drop(columns=["Unnamed: 0"]).set_index("index")
@@ -29,13 +21,16 @@ dictionary = pickle.load(open('Dictionary.sav', 'rb'))
 tfidf = pickle.load(open('TfidfModel.sav', 'rb'))
 index = pickle.load(open('Index.sav', 'rb'))
 
-box = st.selectbox("Mục lục:",("Lời mở đầu","Xây dựng hệ thống","Đề xuất sản phẩm khi khách hàng chọn một sản phẩm bất kỳ","Đề xuất sản phẩm bằng ID khách hàng"))
-if box == "Lời mở đầu":
+box = st.selectbox("Xin mời lựa chọn:",("Mục tiêu của hệ thống đề xuất sản phẩm","Xây dựng hệ thống","Đề xuất sản phẩm khi khách hàng chọn một sản phẩm bất kỳ","Đề xuất sản phẩm bằng ID khách hàng"))
+if box == "Mục tiêu của hệ thống đề xuất sản phẩm":
     st.image('image/RecommendationEngine-1200x675.png')
-    st.write("""
-    Mục tiêu xây dựng hệ thống đề xuất sản phẩm 
-    """)
-    
+    st.markdown("<p style='text-align: center;'>Có rất nhiều ứng dụng mà các trang web thu thập dữ liệu từ người dùng của họ và sử dụng dữ liệu đó để dự đoán lượt thích và không thích của người dùng.<br>Hỗ trợ ra quyết định, cung cấp giải pháp mang tính cá nhân hóa mà không phải trải qua quá trình tìm kiếm phức tạp. Điều này cho phép họ giới thiệu nội dung mà họ thích. Thu thập hành vi và dữ liệu người dùng trước và đưa ra các gợi ý các sản phẩm tốt nhất trong số các sản phẩm phù hợp cho người dùng hiện hành.</p>", unsafe_allow_html=True)
+    st.image("image/recom_sys.png")
+    st.markdown("<p style='text-align: center;'>Có 2 loại hệ thống đề xuất đó là: </p>",unsafe_allow_html=True)
+    st.markdown("<span style='text-align: center;'>* Collaborative Filtering: Đề xuất các mục dựa trên sự đo lường mức độ giống nhau giữa người dùng hoặc các sản phẩm. Giả định cơ bản đằng sau thuật toán là những người dùng có cùng sở thích sẽ có chung sở thích.</span>",unsafe_allow_html=True)
+    st.markdown("<span style='text-align: center;'>* Content-Based Recommendation: Công nghệ máy học có giám sát được sử dụng để nhận biết và phân biệt giữa các mục hoặc sản phẩm thú vị và không thú vị đối với người dùng.</p>",unsafe_allow_html=True)
+    st.image("image/recom_sys_2.png")
+    st.markdown("<p style='text-align: center;'>* Content-Based Recommendation System: Hệ thống dựa trên nội dung đề xuất các mặt hàng cho khách hàng tương tự như các mặt hàng đã được khách hàng xếp hạng cao trước đó. Nó sử dụng các tính năng và thuộc tính của mặt hàng. Từ các thuộc tính này, nó có thể tính toán mức độ giống nhau giữa các mục.</p>",unsafe_allow_html=True)
 
 elif box == "Xây dựng hệ thống":
     st.image("image/toptal-blog-image.png")
@@ -219,40 +214,17 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
     final_data_cus = {"Mã khách hàng": new_data_cus.customer_id, "Tên khách hàng" : new_data_cus.name_x,"Mã sản phẩm" : new_data_cus.product_id,"Tên sản phẩm" : new_data_cus.name_y,"Đánh giá" : new_data_cus.rating_x}
 
     st.table(final_data_cus)
-    # find_user_rec = recommender_user.filter(recommender_user['customer_id'] == customer_id)
-    # st.code(df_recommender_user)
-    # df_recommender_user_1 = pd.concat([df_recommender_user.drop('recommendations', axis=1), pd.DataFrame(df_recommender_user['recommendations'].tolist())], axis=1)
-    # df_recommender_user[['product_id','rating']] = pd.DataFrame(df_recommender_user['recommendations'].tolist(),index=df_recommender_user.index)
-    # st.code(df_recommender_user_1)
 
-    # df_recommender_user_2 = pd.DataFrame(df_recommender_user['recommendations'].values.tolist(), index=df_recommender_user.index)
-    # st.code(df_recommender_user_2)
+    csv_recommender_user = pd.read_csv("user_recs.csv")
+    csv_recommender_user = csv_recommender_user.drop(columns="Unnamed: 0")
 
-    find_user_rec = recommender_user.filter(recommender_user['customer_id'] == customer_id)
-    # find_user_rec = pd.DataFrame(find_user_rec)
-    # df_recommender_user1 = pd.concat([df_recommender_user.drop(['recommendations'], axis=1), df_recommender_user['recommendations'].apply(pd.Series)], axis=1)
-    # st.code(df_recommender_user1)
-
-    # find_user_rec = df_recommender_user.loc(df_recommender_user['customer_id'] == 5682927)
-    # st.code(find_user_rec)
-    result = ''
-    for user in find_user_rec.collect():
-        # st.code(user)
-        lst = []
-        for row in user['recommendations']:
-            print(row)
-            lst.append((row['product_id'],row['rating']))
-        dic_user_rec = {'customer_id' : user.customer_id, 'recommendations' : lst}
-        result = dic_user_rec
-
-    user_result = pd.DataFrame(result)
-    user_result[['product_id','rating']] = pd.DataFrame(user_result['recommendations'].tolist(), index= user_result.index)
+    csv_recommender_user_final = csv_recommender_user.loc[csv_recommender_user['customer_id']==int(customer_id)]
 
     st.markdown("#### Các sản phẩm được đề xuất:")
 
     user_col0,user_col1,user_col2,user_col3,user_col4 = st.columns(5)
     with user_col0:
-        product_user0 = products.loc[products['item_id'] == user_result['product_id'].iloc[0]]
+        product_user0 = products.loc[products['item_id'] == csv_recommender_user_final['product_id'].iloc[0]]
         img_recom = product_user0['image'].tolist()
         st.image(img_recom[0],use_column_width=True)
         name_user = product_user0['name'].unique().tolist()
@@ -263,11 +235,11 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
         st.write("Giá:",f"{price_user[0]:,}","VND")
         rating_user = product_user0['rating'].tolist()
         st.write("Đánh giá:",str(rating_user[0]),"/ 5.0 :star:")
-        score_user0 = user_result['rating'].iloc[0]
+        score_user0 = csv_recommender_user_final['rating'].iloc[0]
         st.write("Điểm similarity:",f"{score_user0:.3f}",":thumbsup:")
 
     with user_col1:
-        product_user1 = products.loc[products['item_id'] == user_result['product_id'].iloc[1]]
+        product_user1 = products.loc[products['item_id'] == csv_recommender_user_final['product_id'].iloc[1]]
         img_recom = product_user1['image'].tolist()
         st.image(img_recom[0],use_column_width=True)
         name_user = product_user1['name'].unique().tolist()
@@ -278,11 +250,11 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
         st.write("Giá:",f"{price_user[0]:,}","VND")
         rating_user = product_user1['rating'].tolist()
         st.write("Đánh giá:",str(rating_user[0]),"/ 5.0 :star:")
-        score_user1 = user_result['rating'].iloc[1]
+        score_user1 = csv_recommender_user_final['rating'].iloc[1]
         st.write("Điểm similarity:",f"{score_user1:.3f}",":thumbsup:")
 
     with user_col2:
-        product_user2 = products.loc[products['item_id'] == user_result['product_id'].iloc[2]]
+        product_user2 = products.loc[products['item_id'] == csv_recommender_user_final['product_id'].iloc[2]]
         img_recom = product_user2['image'].tolist()
         st.image(img_recom[0],use_column_width=True)
         name_user = product_user2['name'].unique().tolist()
@@ -293,11 +265,11 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
         st.write("Giá:",f"{price_user[0]:,}","VND")
         rating_user = product_user2['rating'].tolist()
         st.write("Đánh giá:",str(rating_user[0]),"/ 5.0 :star:")
-        score_user2 = user_result['rating'].iloc[2]
+        score_user2 = csv_recommender_user_final['rating'].iloc[2]
         st.write("Điểm similarity:",f"{score_user2:.3f}",":thumbsup:")
 
     with user_col3:
-        product_user3 = products.loc[products['item_id'] == user_result['product_id'].iloc[3]]
+        product_user3 = products.loc[products['item_id'] == csv_recommender_user_final['product_id'].iloc[3]]
         img_recom = product_user3['image'].tolist()
         st.image(img_recom[0],use_column_width=True)
         name_user = product_user3['name'].unique().tolist()
@@ -308,11 +280,11 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
         st.write("Giá:",f"{price_user[0]:,}","VND")
         rating_user = product_user3['rating'].tolist()
         st.write("Đánh giá:",str(rating_user[0]),"/ 5.0 :star:")
-        score_user3 = user_result['rating'].iloc[3]
+        score_user3 = csv_recommender_user_final['rating'].iloc[3]
         st.write("Điểm similarity:",f"{score_user3:.3f}",":thumbsup:")
 
     with user_col4:
-        product_user4 = products.loc[products['item_id'] == user_result['product_id'].iloc[4]]
+        product_user4 = products.loc[products['item_id'] == csv_recommender_user_final['product_id'].iloc[4]]
         img_recom = product_user4['image'].tolist()
         st.image(img_recom[0],use_column_width=True)
         name_user = product_user4['name'].unique().tolist()
@@ -323,5 +295,5 @@ elif box == "Đề xuất sản phẩm bằng ID khách hàng":
         st.write("Giá:",f"{price_user[0]:,}","VND")
         rating_user = product_user4['rating'].tolist()
         st.write("Đánh giá:",str(rating_user[0]),"/ 5.0 :star:")
-        score_user4 = user_result['rating'].iloc[4]
+        score_user4 = csv_recommender_user_final['rating'].iloc[4]
         st.write("Điểm similarity:",f"{score_user4:.3f}",":thumbsup:")
