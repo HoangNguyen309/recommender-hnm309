@@ -1,12 +1,12 @@
+from pandas.core.indexes import base
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 from recommender import recommender
 
-st.set_page_config(page_title='Hệ thống đề xuất sản phẩm')
-
-st.image("image/csc_banner.png")
+st.set_page_config(page_title="Hệ thống đề xuất sản phẩm",layout="wide")
+st.image("image/csc_banner.png",use_column_width=True)
 st.markdown("<h1 style='text-align: center;background-color:powderblue;'>Đồ án tốt nghiệp Data Science</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center;'>Chủ đề: Recommendation System (Tiki.vn)</h2>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>Nhóm<br>Trần Trọng Huy - Nguyễn Minh Hoàng</h3>", unsafe_allow_html=True)
@@ -20,7 +20,7 @@ reviews = reviews.drop(columns=["Unnamed: 0"]).set_index("id")
 dictionary = pickle.load(open('Dictionary.sav', 'rb'))
 tfidf = pickle.load(open('TfidfModel.sav', 'rb'))
 index = pickle.load(open('Index.sav', 'rb'))
-st.markdown("##### Xin mời lựa chọn:")
+st.markdown("#### Xin mời lựa chọn:")
 box = st.selectbox("",("Mục tiêu của hệ thống đề xuất sản phẩm","Xây dựng hệ thống","Đề xuất sản phẩm khi khách hàng chọn một sản phẩm bất kỳ","Đề xuất sản phẩm bằng ID khách hàng"))
 if box == "Mục tiêu của hệ thống đề xuất sản phẩm":
     st.markdown(
@@ -189,10 +189,10 @@ elif box == "Đề xuất sản phẩm khi khách hàng chọn một sản phẩ
     </style>
     """,
         unsafe_allow_html=True)
-    st.image('image/tiki_banner_1.jpg')
-    st.markdown("##### Vui lòng chọn sản phẩm bạn cần tìm kiếm:")
+    st.image('image/tiki_banner_1.jpg',use_column_width=True)
+    st.markdown("#### Vui lòng chọn sản phẩm bạn cần tìm kiếm:")
     option_all_users = st.selectbox('',products['name'].sort_values().unique().tolist())
-    st.markdown("### Bạn đã chọn sản phẩm:")
+    st.markdown("#### Bạn đã chọn sản phẩm:")
     st.write(option_all_users)
     products_chosen = products.loc[products['name'] == option_all_users]
 
@@ -213,7 +213,7 @@ elif box == "Đề xuất sản phẩm khi khách hàng chọn một sản phẩ
 
         st.write("Đánh giá:   ",str(rating_choose[0]),"/ 5.0 :star:")
 
-    st.markdown("### Các sản phẩm tương tự")
+    st.markdown("#### Các sản phẩm tương tự")
 
     id_product_chosen = products_chosen['item_id'].tolist()
     product_id = id_product_chosen[0]
